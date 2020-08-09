@@ -8,7 +8,7 @@ Provide a top-level app-view to QuickCLJS and it takes care of the rest (figwhee
 
 1. Add the QuickCLJS dependency to your `project.clj`:
 ```clojure
-[io.bloomventures/quickcljs "0.0.1"]
+[quickcljs "0.0.1"]
 ```
 
 2. Add some config to your `project.clj` to point to a function (Reagent component) that will be your top-level view:
