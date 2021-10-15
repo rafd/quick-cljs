@@ -2,10 +2,16 @@
   (:require
     [clojure.java.io :as io]
     [clojure.string :as string]
+    [clojure.core.server :as server]
+    [cljs.repl]
     [hiccup.core :as hiccup]
     [figwheel.main.api :as repl-api])
   (:import
     (java.net ServerSocket)))
+
+(defn io-repl
+  [& {:keys [repl-env]}]
+  (cljs.repl/repl repl-env))
 
 (defn next-available-port
   "Returns next available port #"
@@ -81,12 +87,22 @@
                  :parallel-build true
                  :verbose false}
        :config {:websocket-host :js-client-host
-                :mode :serve
+                ;:mode :serve
                 :open-url false
                 :watch-dirs ["src"]
                 :ring-handler 'quickcljs.core/ring-handler
-                :ring-server-options {:port http-port}}})))
+                :ring-server-options {:port http-port}}})
+
+    (server/start-server
+      {:accept 'quickcljs.core/io-repl ;'cljs.core.server/io-prepl
+       :address "127.0.0.1"
+       :port 6776
+       :name "xyz"
+       :args [:repl-env (repl-api/repl-env "quickcljs")]})
+
+    #_(repl-api/cljs-repl "quickcljs")))
+
+
 
 (defn stop! []
   (repl-api/stop-all))
-
