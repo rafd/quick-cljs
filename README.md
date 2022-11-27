@@ -6,14 +6,22 @@ Provide a top-level app-view to QuickCLJS and it takes care of the rest (figwhee
 
 ## Get Started
 
-1. Add the QuickCLJS dependency to your `project.clj`:
+0. Clone this repo and `lein install`
+
+1. Create a `project.clj` with the QuickCLJS dependency, and a reference to your top-level function (reagent component):
 ```clojure
-[quickcljs "0.0.1"]
+(defproject myapp "0.0.1"
+  :dependencies [[quickcljs "0.0.1"]]
+  :quickcljs-view myapp.core/app-view)
 ```
 
-2. Add some config to your `project.clj` to point to a function (Reagent component) that will be your top-level view:
+2. Create that namespace and view (ex. `src/myapp/core.cljs`)
+
 ```clojure
-:quickcljs-view myapp.some.ns/app-view
+(ns myapp.core)
+
+(defn app-view []
+  "Hello World")
 ```
 
 3. Launch a Leiningen REPL:
@@ -23,20 +31,16 @@ lein repl
 
 4. Require QuickCLJS:
 ```clojure
-(require 'quickcljs.core)
-```
-
-5. Start Figwheel:
-```clojure
-(quickcljs.core/start!)
+(require 'quickcljs.go)
 ```
 
 6. Navigate to the printed server URL (a random available port is chosen the first time you run)
 
 7. Enjoy!
 
-8. To stop Figwheel:
+8. To stop or restart the build:
 ```clojure
-(quickcljs.core/stop!)
+(quickcljs.go/stop!)
+(quickcljs.go/start!)
 ```
 
