@@ -1,6 +1,7 @@
 (ns quickcljs.core
   (:require
-    [reagent.dom :as rdom])
+    [reagent.dom :as rdom]
+    [quickcljs.tailwind-reagent :as twr])
   (:require-macros
     [quickcljs.core :refer [create-app-view]]))
 
@@ -12,7 +13,8 @@
   []
   (rdom/render
     [app-view]
-    (js/document.getElementById "app")))
+    (js/document.getElementById "app")
+    (twr/modded-reagent-compiler)))
 
 (defn ^:export init
   []

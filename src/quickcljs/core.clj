@@ -3,7 +3,8 @@
     [clojure.java.io :as io]
     [clojure.string :as string]
     [hiccup.core :as hiccup]
-    [figwheel.main.api :as repl-api])
+    [figwheel.main.api :as repl-api]
+    [quickcljs.girouette :as giro])
   (:import
     (java.net ServerSocket)))
 
@@ -25,7 +26,10 @@
      (hiccup/html
        [:html
         [:head
-         [:title "QuickCLJS"]]
+         [:title "QuickCLJS"]
+         [:link {:rel "stylesheet"
+                 :href "/css/twstyles.css"
+                 :media "screen"}]]
         [:body
          [:div#app]
          [:script {:type "text/javascript" :src "/js/app.js"}]
@@ -34,6 +38,13 @@
     (= (request :uri) "/favicon.ico")
     {:status 200
      :body nil}
+
+    (= (request :uri) "/css/twstyles.css")
+    {:status 200
+     :headers {"Content-Type" "text/css; charset=utf-8"
+               "Cache-Control" "no-store"}
+     :body (slurp (-> (request :uri)
+                      (string/replace-first "/css/" "./target/quickcljs-output/css/"))) }
 
     (string/starts-with? (request :uri) "/js/")
     {:status 200
@@ -83,9 +94,11 @@
        :config {:websocket-host :js-client-host
                 :mode :serve
                 :open-url false
+                :css-dirs ["target/quickcljs-output/css/"]
                 :watch-dirs ["src"]
                 :ring-handler 'quickcljs.core/ring-handler
-                :ring-server-options {:port http-port}}})))
+                :ring-server-options {:port http-port}}})
+    (giro/start! {})))
 
 (defn stop! []
   (repl-api/stop-all))
