@@ -1,4 +1,7 @@
 (defproject org.clojars.rafd/quickcljs "0.0.2"
+  :license {:name "MIT"
+            :url "https://opensource.org/license/mit"
+            :distribution :repo}
   :dependencies [[org.clojure/clojure "1.11.1"]
                  [org.clojure/clojurescript "1.10.773"]
                  [garden "1.3.10"]
