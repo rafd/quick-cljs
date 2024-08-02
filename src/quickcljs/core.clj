@@ -108,7 +108,7 @@
                 :mode :serve
                 :open-url false
                 :css-dirs ["target/quickcljs-output/css/"]
-                :watch-dirs ["src"]
+                :watch-dirs ["src" "dev-src"]
                 :ring-handler 'quickcljs.core/ring-handler
                 :ring-server-options {:port http-port}}})
     (giro/start! {})))
