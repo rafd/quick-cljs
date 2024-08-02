@@ -1,5 +1,6 @@
 (ns quickcljs.core
   (:require
+    [clojure.walk :as walk]
     [clojure.java.io :as io]
     [clojure.string :as string]
     [hiccup.core :as hiccup]
@@ -57,11 +58,23 @@
     {:status 404}))
 
 (defn config-app-view-symbol []
-  (->> "project.clj"
-       slurp
-       read-string
-       (drop-while (fn [x] (not= x :quickcljs-view)))
-       second))
+  ;; poor man's reading value from project.clj
+  ;; it isn't aware of which profile is active
+  (let [nodes (->> "project.clj"
+                   slurp
+                   read-string)]
+    (or (->> nodes
+             (drop-while (fn [x] (not= x :quickcljs-view)))
+             second)
+        (let [v (atom nil)]
+          (->> nodes
+               (walk/postwalk (fn [node]
+                                (when (and
+                                        (map-entry? node)
+                                        (= :quickcljs-view (key node)))
+                                  (reset! v (val node)))
+                                node)))
+          @v))))
 
 (defmacro create-app-view []
   (if-let [sym (config-app-view-symbol)]
