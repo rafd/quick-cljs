@@ -91,6 +91,7 @@
                         (let [new-port (next-available-port)]
                           (spit port-file new-port)
                           new-port)))]
+    (.mkdirs (io/file "target/quickcljs-output/css/"))
     (repl-api/start
       {:id "quickcljs"
        :options {:main "quickcljs.core"
