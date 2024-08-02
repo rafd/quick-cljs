@@ -1,4 +1,4 @@
-(defproject quickcljs "0.0.1"
+(defproject quickcljs "0.0.2"
   :dependencies [[org.clojure/clojure "1.11.1"]
                  [org.clojure/clojurescript "1.11.60"]
                  [garden "1.3.10"]
