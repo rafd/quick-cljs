@@ -6,12 +6,10 @@ Provide a top-level app-view to QuickCLJS and it takes care of the rest (figwhee
 
 ## Get Started
 
-0. Clone this repo and `lein install`
-
 1. Create a `project.clj` with the QuickCLJS dependency, and a reference to your top-level function (reagent component):
 ```clojure
 (defproject myapp "0.0.1"
-  :dependencies [[quickcljs "0.0.1"]]
+  :dependencies [[org.clojars.rafd/quickcljs "0.0.2"]]
   :quickcljs-view myapp.core/app-view)
 ```
 

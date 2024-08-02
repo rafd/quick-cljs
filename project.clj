@@ -1,6 +1,6 @@
-(defproject quickcljs "0.0.2"
+(defproject org.clojars.rafd/quickcljs "0.0.2"
   :dependencies [[org.clojure/clojure "1.11.1"]
-                 [org.clojure/clojurescript "1.11.60"]
+                 [org.clojure/clojurescript "1.10.773"]
                  [garden "1.3.10"]
                  [hiccup "1.0.5"]
                  [girouette/processor "0.0.8"]
